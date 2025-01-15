@@ -1,56 +1,56 @@
 function init() {
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.id = 'texto';
-  input.placeholder = 'Digite um texto';
+  const textInput = document.createElement('input');
+  textInput.type = 'text';
+  textInput.id = 'textInput';
+  textInput.placeholder = 'Enter a text';
 
-  const botaoAdicionar = document.createElement('button');
-  botaoAdicionar.textContent = 'Adicionar';
-  botaoAdicionar.id = 'botaoAdicionar';
-  botaoAdicionar.addEventListener('click', () => {
-    const texto = input.value.trim();
-    if (texto) {
-      let lista = document.querySelector('ul');
-      if (!lista) {
-        lista = document.createElement('ul');
-        document.body.appendChild(lista);
+  const addButton = document.createElement('button');
+  addButton.textContent = 'Add';
+  addButton.id = 'addButton';
+  addButton.addEventListener('click', () => {
+    const text = textInput.value.trim();
+    if (text) {
+      let list = document.querySelector('ul');
+      if (!list) {
+        list = document.createElement('ul');
+        document.body.appendChild(list);
       }
-      const items = Array.from(lista.children).map(item => item.textContent);
-      if (!items.includes(texto)) {
-        const item = document.createElement('li');
-        item.textContent = texto;
-        lista.appendChild(item);
+      const items = Array.from(list.children).map(item => item.textContent);
+      if (!items.includes(text)) {
+        const listItem = document.createElement('li');
+        listItem.textContent = text;
+        list.appendChild(listItem);
       } else {
-        alert('Texto já existe na lista!');
+        alert('Text already exists in the list!');
       }
     } else {
-      alert('Por favor, insira um texto antes de adicionar.');
+      alert('Please enter a text before adding.');
     }
   });
 
-  const botaoExcluir = document.createElement('button');
-  botaoExcluir.textContent = 'Excluir';
-  botaoExcluir.id = 'botaoExcluir';
-  botaoExcluir.disabled = true;
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.id = 'deleteButton';
+  deleteButton.disabled = true;
 
-  botaoExcluir.addEventListener('click', () => {
-    const lista = document.querySelector('ul');
-    if (lista && lista.lastChild) {
-      lista.removeChild(lista.lastChild);
+  deleteButton.addEventListener('click', () => {
+    const list = document.querySelector('ul');
+    if (list && list.lastChild) {
+      list.removeChild(list.lastChild);
     }
-    botaoExcluir.disabled = !lista || lista.children.length === 0;
+    deleteButton.disabled = !list || list.children.length === 0;
   });
 
   const observer = new MutationObserver(() => {
-    const lista = document.querySelector('ul');
-    botaoExcluir.disabled = !lista || lista.children.length === 0;
+    const list = document.querySelector('ul');
+    deleteButton.disabled = !list || list.children.length === 0;
   });
 
   observer.observe(document.body, { childList: true, subtree: true });
 
-  document.body.appendChild(input);
-  document.body.appendChild(botaoAdicionar);
-  document.body.appendChild(botaoExcluir);
+  document.body.appendChild(textInput);
+  document.body.appendChild(addButton);
+  document.body.appendChild(deleteButton);
 }
 
 window.onload = init;
